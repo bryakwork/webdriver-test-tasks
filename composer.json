@@ -1,5 +1,10 @@
 {
     "require": {
         "facebook/webdriver": "^1.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "myParsers\\": "src/MyParsers"
+        }
     }
 }
