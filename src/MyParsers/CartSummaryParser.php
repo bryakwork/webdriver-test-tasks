@@ -37,11 +37,15 @@ class CartSummaryParser
             $traceString = print_r($exception->getTrace(), true);
             echo "Error occured: $errorMessage \n";
             echo "Trace: \n $traceString \n";
-        } finally {
-            $this->driver->quit();
         }
     }
 
+    /**
+     * @return void
+     */
+    public function quit() {
+        $this->driver->quit();
+    }
     /**
      * @return array
      */

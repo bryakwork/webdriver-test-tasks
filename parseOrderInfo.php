@@ -11,7 +11,7 @@ use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\RemoteWebElement;
 use Facebook\WebDriver\WebDriverBy;
 
-require('vendor/autoload.php');
+require 'vendor/autoload.php';
 
 function getOrderDetails(RemoteWebDriver $driver)
 {
@@ -53,7 +53,7 @@ function getBillTo(RemoteWebDriver $driver)
     array_shift($shipToDataNodes);
     $addressString = '';
     foreach ($shipToDataNodes as $shipToElement) {
-        $addressString .=  $shipToElement->getText() . " ";
+        $addressString .=  $shipToElement->getText() . ' ' ;
     }
     $addressString = rtrim($addressString);
     $result['address'] = $addressString;
@@ -115,6 +115,7 @@ function getOrderTotalInfo(RemoteWebDriver $driver)
 
     return $result;
 }
+$startTime = microtime(true);
 
 $host = 'http://localhost:4444/wd/hub';
 try {
@@ -129,6 +130,9 @@ try {
     $result['orderTotalInfo'] = getOrderTotalInfo($driver);
 
     print_r($result);
+    $endTime = microtime(true);
+    $executionTime = $endTime - $startTime;
+    echo "\n Execution Time : $executionTime s";
 } catch (Throwable $exception) {
     $errorMessage = $exception->getMessage();
     $traceString = print_r($exception->getTrace(), true);

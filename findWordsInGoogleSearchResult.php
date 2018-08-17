@@ -31,7 +31,7 @@ function findWords(array $searchWords, RemoteWebDriver $driver)
 }
 
 function buildXpathSelectorfromSearchWords(array $searchWords){
-    $result = "";
+    $result = '';
     foreach ($searchWords as $word) {
         $result .= "contains(text(), '$word') or ";
     }
@@ -43,11 +43,11 @@ function goToPage(int $pageNumber, RemoteWebDriver $driver)
 {
     $driver->findElement(WebDriverBy::xpath("//div[@id='navcnt']//a[@aria-label='Page $pageNumber']"))->click();
 }
-
+$startTime = microtime(true);
 $host = 'http://localhost:4444/wd/hub';
 try {
     $driver = RemoteWebDriver::create($host, DesiredCapabilities::chrome());
-    $document = $driver->get('https://www.google.com');
+    $driver->get('https://www.google.com');
     $searchForm = $driver->findElement(WebDriverBy::xpath("//input[@id='lst-ib']"))
         ->sendKeys($searchTerm)
         ->submit();
@@ -57,6 +57,9 @@ try {
             goToPage($pageNumber + 1, $driver);
         }
     }
+    $endTime = microtime(true);
+    $executionTime = $endTime - $startTime;
+    echo "\n Execution Time : $executionTime s";
 } catch (Throwable $exception) {
     $errorMessage = $exception->getMessage();
     $traceString = print_r($exception->getTrace(), true);
